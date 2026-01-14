@@ -92,7 +92,7 @@ const App: React.FC = () => {
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       type
     };
-    setNotifications(prev => [newNotif, ...prev]);
+    setNotifications((prev: Notification[]) => [newNotif, ...prev]);
     setNewNotifPulse(true);
     if (type === 'alert') setShowNotifPanel(true);
     setTimeout(() => setNewNotifPulse(false), 3000);
@@ -103,7 +103,7 @@ const App: React.FC = () => {
       if (event.type === 'GLOBAL_SOS') {
         const { hospitalName, request } = event.payload;
         addNotification(`🚨 URGENT SOS: ${hospitalName} needs ${request.bloodType} immediately!`, 'alert');
-        setMyRequests(prev => [request, ...prev]);
+        setMyRequests((prev: EmergencyRequest[]) => [request, ...prev]);
       }
     });
     return () => unsubscribe();
@@ -128,7 +128,7 @@ const App: React.FC = () => {
       type: 'GLOBAL_SOS',
       payload: { hospitalName: user.name, location: 'Emergency Wing', timestamp: new Date().toLocaleTimeString(), request: sosRequest }
     });
-    setMyRequests(prev => [sosRequest, ...prev]);
+    setMyRequests((prev: EmergencyRequest[]) => [sosRequest, ...prev]);
     addNotification(`SOS Broadcasted to Network. Awaiting Blood Bank response...`, 'success');
     setActiveTab('feed');
   };
@@ -177,7 +177,7 @@ const App: React.FC = () => {
       type: 'GLOBAL_SOS',
       payload: { hospitalName: user?.name || 'Facility', location: 'Main Unit', timestamp: 'Now', request: newReq }
     });
-    setMyRequests(prev => [newReq, ...prev]);
+    setMyRequests((prev: EmergencyRequest[]) => [newReq, ...prev]);
     setActiveTab('feed');
     addNotification(`Request broadcasted to the medical network.`, 'success');
   };
