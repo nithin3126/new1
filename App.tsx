@@ -135,7 +135,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     setLocationStatus('loading');
-    getCurrentPosition().then(pos => {
+    getCurrentPosition().then((pos: GeoCoords) => {
       setUserLocation(pos);
       setLocationStatus('online');
     }).catch(() => {
@@ -264,8 +264,8 @@ const App: React.FC = () => {
           {activeTab === 'my-stock' && user.role === 'BloodBank' && <StockManagement bankName={user.name} initialInventory={institutionalProfile?.inventory || {}} initialPlatelets={institutionalProfile?.plateletsCount || 0} />}
           {activeTab === 'donor-db' && <DonorDatabase userLocation={userLocation} />}
           {activeTab === 'schedule' && <DonationSchedule lastDonationDate="2024-10-15" bloodType="O-" onNavigateToDrives={() => setActiveTab('feed')} />}
-          {activeTab === 'eligibility' && <EligibilityChecker onVerified={(advice) => addNotification(advice, 'success')} />}
-          {activeTab === 'feed' && <EmergencyFeed requests={allRequests} onMatch={(req) => setSelectedRequest(req)} dengueMode={false} userLocation={userLocation} />}
+          {activeTab === 'eligibility' && <EligibilityChecker onVerified={(advice: string) => addNotification(advice, 'success')} />}
+          {activeTab === 'feed' && <EmergencyFeed requests={allRequests} onMatch={(req: EmergencyRequest) => setSelectedRequest(req)} dengueMode={false} userLocation={userLocation} />}
           {activeTab === 'scanner' && <NearbyScanner initialLocation={userLocation} />}
           {activeTab === 'drives' && <BloodDriveList onNotify={addNotification} user={user} initialLocation={userLocation} />}
           {activeTab === 'leaderboard' && <Leaderboard />}
